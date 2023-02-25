@@ -20,7 +20,6 @@ contract System {
         string name;
         string description;
         string companyName;
-        
     }
 
     mapping(address => User) users;

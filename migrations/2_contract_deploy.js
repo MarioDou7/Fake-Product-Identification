@@ -1,4 +1,4 @@
-const System = artifacts.require("System");
+const System = artifacts.require("./System.sol");
 
 module.exports = function(deployer) {
   deployer.deploy(System);
