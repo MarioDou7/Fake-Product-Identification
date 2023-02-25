@@ -25,7 +25,7 @@ contract System {
 
     mapping(address => User) users;
     mapping(address => Company) companies;
-    mapping(address => Product) products;
+    mapping(bytes32 => Product) products;
 
 
     function register_User(address _useraddress,string memory _name, string memory _email, string memory _password) public {
@@ -36,9 +36,11 @@ contract System {
         companies[_compaddress] = Company(_name,_email,_password,_cert_num);
     }
 
-    function upload_Product(address _compaddress,uint _id,string memory _name, string memory _description,string memory _companyName) public 
+    function upload_Product(uint _id,string memory _name, string memory _description,string memory _companyName) public 
     {
-        products[_compaddress] = Product(_id,_name,_description,_companyName);
+        Product memory p = Product(_id,_name,_description,_companyName);
+        bytes32 p_hashed = keccak256(abi.encode(p.id, p.name, p.description, p.companyName));
+        products[p_hashed] = p;
     }
 
     function login_user (address user_add , string memory _name , string memory _password) public view returns (bool found)
@@ -62,6 +64,5 @@ contract System {
             else
                 return false;
     }
-
     
 }
