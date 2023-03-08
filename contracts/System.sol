@@ -1,4 +1,4 @@
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity >=0.4.17<0.9.0;
 
 contract System {
 
@@ -22,9 +22,11 @@ contract System {
         string companyName;
     }
 
+    Product public prod;
+
     mapping(address => User) users;
     mapping(address => Company) companies;
-    mapping(bytes32 => Product) products;
+    mapping(bytes32 => Product) public products;
 
 
     function register_User(address _useraddress,string memory _name, string memory _email, string memory _password) public {
@@ -62,6 +64,16 @@ contract System {
                 return true;
             else
                 return false;
+    }
+
+    function verify_product (bytes32 product_add) public returns (Product memory prodd)
+    {
+        prod = products[product_add];
+        return prod;
+    }
+
+    function delete_product (bytes32 product_add) public {
+        delete products[product_add];
     }
     
 }
